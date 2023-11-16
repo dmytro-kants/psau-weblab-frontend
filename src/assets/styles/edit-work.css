@@ -1,0 +1,37 @@
+.edit-work {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #243257;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-work label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.edit-work input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    background-color: #fff; /* Background color for input fields */
+    color: #243257; /* Text color for input fields */
+}
+
+.edit-work button {
+    background-color: #fff;
+    color: #243257;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-work button:hover {
+    background-color: #eee; /* Hover background color */
+}
