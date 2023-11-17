@@ -14,6 +14,7 @@ const Works = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [currentPage, setCurrentPage] = useState(page || 1);
   const [inputPage, setInputPage] = useState('');
+  const [searchInput, setSearchInput] = useState(location?.state?.searchValue || '');
   const dispatch = useDispatch();
 
   const worksWrapperRef = useRef();
@@ -25,20 +26,28 @@ const Works = () => {
     }
   };
 
+  const handleSearch = () => {
+    dispatch(getAllWorksAsync({ currentPage, searchInput }));
+  };
+
   const handleDeleteWork = async (articleId) => {
     try {
       await dispatch(deleteWorkAsync(articleId));
-      dispatch(getAllWorksAsync(currentPage));
+      handleSearch()
     } catch (error) {
       console.error("Error deleting work:", error);
     }
   };
 
   useEffect(() => {
-    dispatch(getAllWorksAsync(currentPage));
-  }, [dispatch, currentPage]);
+    handleSearch()
+  }, [currentPage]);
 
-  
+  useEffect(()=>{
+    if (totalPages < 2){
+      setCurrentPage(1) 
+    }
+  },[totalPages])
 
   if (status === "loading") {
     <div className='spiner-container'>
@@ -56,6 +65,10 @@ const Works = () => {
           <div id="works-title">ТВОРЧI РОБОТИ СТУДЕНТIВ</div><br />
           <div id="works-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quia et explicabo a repellat recusandae suscipit architecto cumque distinctio. Unde iusto accusantium modi tempore possimus dolorem dolore dolorum nesciunt. Voluptas eveniet sed nihil fuga similique, officia porro deserunt libero eius culpa distinctio, ipsa facilis repudiandae magnam ab ad, minima delectus rerum corrupti illum! Numquam veniam fugiat consequatur cumque natus amet possimus eligendi. Aliquam molestiae, delectus porro fugiat est minima dolore?</div>
           <br />
+          <div className="search-container" style={{marginBottom:"20px"}}>
+            <input type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
+            <button onClick={handleSearch}>Пошук</button>
+          </div>
         </div>
         <div className="works-list__wrapper" ref={worksWrapperRef}>
           {works.map((work) => (
@@ -74,7 +87,7 @@ const Works = () => {
                 </button>
                 <Link style={{ marginBottom: "30px", color: "white", position: 'absolute', top: '87%', right: '15px' }} to={{
                   pathname: `/works/${work._id}/edit`,
-                  state: { page: currentPage },
+                  state: { page: currentPage, searchValue:searchInput },
                 }}>Редагувати</Link>
               </>
               )}

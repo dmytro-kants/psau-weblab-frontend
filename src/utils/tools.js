@@ -49,7 +49,7 @@ export const EDITOR_JS_TOOLS = {
     class: ImageTool,
     config: {
       endpoints: {
-        byFile: 'http://localhost:5000/api/uploadFile',
+        byFile: 'https://agrarian-backend.onrender.com/api/uploadFile ',
     
       },
     }

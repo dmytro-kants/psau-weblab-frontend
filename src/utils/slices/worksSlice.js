@@ -9,9 +9,9 @@ const initialState = {
   error: null,
 };
 
-export const getAllWorksAsync = createAsyncThunk('works/getAllWorks', async (page) => {
+export const getAllWorksAsync = createAsyncThunk('works/getAllWorks', async (data) => {
   try {
-    const response = await $api.get(`/getAllWorks?page=${page}`);
+    const response = await $api.get(`/getAllWorks?page=${data.currentPage}&searchValue=${data.searchInput}`);
     return response.data;
   } catch (error) {
     throw error;

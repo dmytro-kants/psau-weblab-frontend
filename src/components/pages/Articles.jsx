@@ -14,6 +14,7 @@ const Articles = () => {
   const isAuth = useSelector((state) => state.auth.isAuth)
   const [currentPage, setCurrentPage] = useState(location?.state?.page || 1);
   const [inputPage, setInputPage] = useState('');
+  const [searchInput, setSearchInput] = useState(location?.state?.searchValue || '');
   const dispatch = useDispatch();
 
   const handlePageChange = (newPage) => {
@@ -21,18 +22,27 @@ const Articles = () => {
       setCurrentPage(newPage);
     }
   };
-
+  const handleSearch = () => {
+    dispatch(getAllArticlesAsync({currentPage, searchInput}));
+    
+  };
   const handleDeleteArticle = async (articleId) => {
     try {
       await dispatch(deleteArticleAsync(articleId));
-      dispatch(getAllArticlesAsync(currentPage));
+      handleSearch()
     } catch (error) {
       console.error("Error deleting article:", error);
     }
   };
 
+  useEffect(()=>{
+    if (totalPages < 2){
+      setCurrentPage(1) 
+    }
+  },[totalPages])
+
   useEffect(() => {
-    dispatch(getAllArticlesAsync(currentPage));
+    handleSearch()
   }, [dispatch, currentPage]);
 
   return (
@@ -40,6 +50,10 @@ const Articles = () => {
       <div className="news-content">
         <div className="container">
           <h1 style={{ fontSize: "45px", marginBottom: "20px", marginTop: "10px" }}>Останні новини</h1>
+          <div className="search-container">
+            <input type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
+            <button onClick={handleSearch}>Пошук</button>
+          </div>
           <div className="news-wrap">
             {articles.map((article) => {
               const dateString = article.date;
@@ -53,7 +67,7 @@ const Articles = () => {
                 <div className="news-element-rmk">
                   <Link style={{ marginBottom: "30px", color: "black" }} key={article.id} to={{
                     pathname: `/news/${article._id}`,
-                    state: { page: currentPage }
+                    state: { page: currentPage, searchValue:searchInput }
                   }}>
 
                     <p style={{ fontSize: "14px" }}>Опубліковано: {formattedDate}</p>
@@ -71,7 +85,7 @@ const Articles = () => {
               Попередня
             </button>
 
-            <span>{currentPage} / {totalPages}</span>
+            <span>{currentPage} / {totalPages || 1}</span>
             <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
               Наступна
             </button>

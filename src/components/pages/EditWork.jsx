@@ -11,6 +11,7 @@ const EditWork = () => {
     const { id } = useParams();
     const location = useLocation();
     const page = location?.state?.page || 1;
+    const searchValue = location?.state?.searchValue || ""
     const [editedData, setEditedData] = useState({});
     const isAuth = useSelector((state) => state.auth.isAuth)
     const [dataFetched, setDataFetched] = useState(false);
@@ -57,7 +58,7 @@ const EditWork = () => {
             <Link className="back-to-works-link"
                 to={{
                     pathname: '/works',
-                    state: { page },
+                    state: { page, searchValue },
                 }}
             >Назад до робіт</Link>
 

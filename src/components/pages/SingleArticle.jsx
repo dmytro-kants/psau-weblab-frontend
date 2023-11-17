@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import $api from '../../utils/api';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import '../../assets/styles/article.css';
 import { InfinitySpin } from 'react-loader-spinner';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom';
@@ -14,14 +13,13 @@ const SingleArticle = () => {
   const [article, setArticle] = useState();
   const isAuth = useSelector((state) => state.auth.isAuth);
   const location = useLocation();
-  console.log(location);
   const page = location?.state?.page || 1;
+  const searchValue = location?.state?.searchValue || ""
 
   const getSingleArticle = async (id) => {
     try {
       const result = await $api.get(`/getSingleArticle?id=${id}`);
       setArticle(result);
-      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +27,7 @@ const SingleArticle = () => {
 
   useEffect(() => {
     getSingleArticle(id);
-  }, []);
+  }, [id]);
 
   if (!article) {
     return (
@@ -53,7 +51,7 @@ const SingleArticle = () => {
         className="back-to-works-link"
         to={{
           pathname: `/news`,
-          state: { page }
+          state: { page, searchValue }
         }}
       >
         Назад до новин
@@ -61,6 +59,7 @@ const SingleArticle = () => {
       <div className="article-info">
         <span>Автор: {article.data.author.email}</span>
         <span>Створено: {formattedDate}</span>
+        <span>Переглядів: {article.data.viewCounter}</span>
       </div>
       <h1>{article.data.title}</h1>
       <div
@@ -75,6 +74,7 @@ const SingleArticle = () => {
           Редагувати новину
         </Link>
       ) : null}
+
       <ScrollToTop />
     </div>
   );

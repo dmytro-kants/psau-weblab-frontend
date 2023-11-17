@@ -20,6 +20,8 @@ import Main from "./components/pages/Main";
 import SingleArticle from "./components/pages/SingleArticle";
 import EditArticle from "./components/pages/EditArticle";
 import EditWork from "./components/pages/EditWork";
+import CreateWork from "./components/pages/CreateWork";
+import CreateArticle from "./components/pages/CreateArticle";
 
 
 function App() {
@@ -41,6 +43,9 @@ function App() {
           <Route exact path="/news">
             <Articles />
           </Route>
+          <Route exact path="/news/create">
+            <CreateArticle />
+          </Route>
           <Route exact path="/news/:id">
             <SingleArticle />
           </Route>
@@ -49,6 +54,9 @@ function App() {
           </Route>
           <Route exact path="/works">
             <Works />
+          </Route>
+          <Route exact path="/works/create">
+            <CreateWork />
           </Route>
           <Route path="/works/:id/edit">
             <EditWork />

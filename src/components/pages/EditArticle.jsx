@@ -62,6 +62,7 @@ function EditArticle() {
     </div>
   }
   return (
+    <div className="container">
     <div className="editor">
       {dataFetched && (
         <>
@@ -96,6 +97,7 @@ function EditArticle() {
         </>
       )}
       <ScrollToTop />
+    </div>
     </div>
   );
 }

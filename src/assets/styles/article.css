@@ -8,9 +8,8 @@
 }
 
 /* Стили для изображений внутри новости */
-.article-content{
-   
-}
+.article-content {}
+
 .article-content img {
     max-width: 500px;
     height: auto;
@@ -52,9 +51,33 @@
     margin-top: 20px;
     font-style: italic;
     color: #777;
-  }
-  
-  /* Стили для каждого элемента в блоке информации */
-  .article-info span {
+}
+
+/* Стили для каждого элемента в блоке информации */
+.article-info span {
     margin-right: 10px;
-  }
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+}
+
+.search-container input {
+    padding: 8px;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-container button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
