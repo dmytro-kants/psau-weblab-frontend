@@ -12,6 +12,7 @@ const initialState = {
 export const getAllWorksAsync = createAsyncThunk('works/getAllWorks', async (data) => {
   try {
     const response = await $api.get(`/getAllWorks?page=${data.currentPage}&searchValue=${data.searchInput}`);
+    console.log('asdasd');
     return response.data;
   } catch (error) {
     throw error;
