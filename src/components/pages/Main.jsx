@@ -19,7 +19,7 @@ const Main = () => {
   useCustomMouseOverHook(works, worksWrapperRef);
 
   useEffect(() => {
-    dispatch(getAllWorksAsync(1));
+    dispatch(getAllWorksAsync({currentPage:1, searchValue:''}));
   }, [dispatch]);
 
   return (
