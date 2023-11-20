@@ -12,7 +12,6 @@ const initialState = {
 export const getAllWorksAsync = createAsyncThunk('works/getAllWorks', async (data) => {
   try {
     const response = await $api.get(`/getAllWorks?page=${data.currentPage}&searchValue=${data.searchInput}`);
-    console.log('asdasd');
     return response.data;
   } catch (error) {
     throw error;
@@ -21,7 +20,6 @@ export const getAllWorksAsync = createAsyncThunk('works/getAllWorks', async (dat
 
 export const updateWorkAsync = createAsyncThunk('works/updateWork', async (work) => {
   try {
-    console.log(work);
     const response = await $api.put(`/updateWork`, work);
     return response.data;
   } catch (error) {

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
-import { sliderData } from "../../utils/data";
 import SliderContent from "./SliderContent";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCarouselItemsAsync } from "../../utils/slices/carouselSlice";
 
 
-export default function SimpleSlider() {
-    var settings = {
+const SimpleSlider = () => {
+
+    const carouselItems = useSelector((state) => state.carousel.carouselItems)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllCarouselItemsAsync())
+    }, [dispatch])
+    
+    const settings = {
 
         dots: true,
         autoplay: true,
@@ -16,12 +25,14 @@ export default function SimpleSlider() {
         slidesToScroll: 1
     };
     return (
-        <div class="container">
+        <div className="container">
             <Slider {...settings}>
-                {sliderData.map((element) => {
-                    return <SliderContent imageUrl={element.imageUrl} title={element.title} content={element.content} />
+                {carouselItems.map((element) => {
+                    return <SliderContent key={element.title} imageUrl={element.image} title={element.title} content={element.description} />
                 })}
             </Slider>
         </div>
     );
 }
+
+export default SimpleSlider

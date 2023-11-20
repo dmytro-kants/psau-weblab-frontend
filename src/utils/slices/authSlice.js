@@ -8,7 +8,7 @@ const notifyFailedLogin = () => toast("Невірні дані!");
 export const loginAsync = createAsyncThunk('auth/login', async (credentials, { rejectWithValue, dispatch }) => {
   try {
     const { email, password } = credentials
-    const response = await $api.post('/login', { email, password })
+    const response = await $api.post('/login', { email, password }, {withCredentials:true})
     localStorage.setItem('token', response.data.accessToken);
     return { user: { id: response.data.id, email: response.data.email } };
   } catch (e) {
@@ -33,7 +33,7 @@ export const registrationAsync = createAsyncThunk('auth/registration', async (cr
 export const logoutAsync = createAsyncThunk('auth/logout', async (credentials, { rejectWithValue }) => {
   try {
     const { user } = credentials
-    await $api.post('/logout', { user })
+    await $api.post('/logout', { user },{ withCredentials: true })
     localStorage.removeItem('token');
     return {};
   } catch (e) {
@@ -44,11 +44,11 @@ export const logoutAsync = createAsyncThunk('auth/logout', async (credentials, {
 
 export const checkAuthAsync = createAsyncThunk('auth/checkAuth', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true });
-    localStorage.setItem('token', response.data.accessToken);
+    const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true }); // спроба створити нову пару токенів
+    localStorage.setItem('token', response.data.accessToken); // встановлення токена доступу в Local Storage
     return { user: { id: response.data.id, email: response.data.email } };
   } catch (e) {
-    console.error("Error during checkAuth:", e);
+    console.error("Помилка при перевірці авторизації:", e);
     return rejectWithValue(e.response?.data?.message);
   }
 });

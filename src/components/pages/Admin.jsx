@@ -90,6 +90,12 @@ const Admin = () => {
             </h2>
           </div>
 
+          <div className='admin-section'>
+            <h2 className='admin-subheader'>
+              <Link to="/carousel"><button className='admin-button'>Керувати наповненням каруселі</button></Link>
+            </h2>
+          </div>
+
 
 
           <ToastContainer

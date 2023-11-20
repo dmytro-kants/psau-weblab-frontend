@@ -11,29 +11,33 @@ const Footer = () => {
     const user = useSelector((state) => state.auth.user);
     const history = useHistory()
     const handleLogout = () => {
-        dispatch(logoutAsync({user}))
-        localStorage.removeItem('token');
-        history.push('/login'); // Redirect to login page on logout
-      };
+        dispatch(logoutAsync({ user })).then(() => {
+            history.push('/login');
+        })
+
+    };
 
     return (
-            <footer class="footer">
-                <div class="footer-background">
-                    <div class="container">
-                        <div class="footer-flex">
-                            <div class="footer-left" style={{paddingTop:"5px"}}>
-                                <div class="footer-navbar">
-                                    (C) ЛАБОРАТОРІЯ ВЕБТЕХНОЛОГІЙ І ХМАРНИХ ОБЧИСЛЕНЬ
-                                </div>
+        <footer className="footer">
+            <div className="footer-background">
+                <div className="container">
+                    <div className="footer-flex">
+                        <div className="footer-left" style={{ paddingTop: "5px" }}>
+                            <div className="footer-navbar">
+                                (C) ЛАБОРАТОРІЯ ВЕБТЕХНОЛОГІЙ І ХМАРНИХ ОБЧИСЛЕНЬ
                             </div>
-                            <div class="footer-right" style={{paddingTop:"5px"}}>
+                        </div>
+                        <div class="footer-right" style={{ paddingTop: "5px" }}>
 
-                                {isAuth ? (<><Link style={{color:"white", fontSize:"20px", paddingRight:"20px"}} to="/admin">Адмін-панель </Link><button onClick={handleLogout}>Вийти</button></>) : <Link style={{color:"white"}} to="/login">Вхід для адміністратора</Link>}
-                            </div>
+                            {isAuth ?
+                                (<><Link style={{ color: "white", fontSize: "20px", paddingRight: "20px" }} to="/admin">Адмін-панель </Link>
+                                    <button onClick={handleLogout}>Вийти</button></>) :
+                                <Link style={{ color: "white" }} to="/login">Вхід для адміністратора</Link>}
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div>
+        </footer>
     )
 }
 

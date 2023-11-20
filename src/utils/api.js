@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = `https://agrarian-backend.onrender.com/api`
+export const API_URL = `http://localhost:5000/api`
 
 const $api = axios.create({
     withCredentials: true,
@@ -8,7 +8,7 @@ const $api = axios.create({
 })
 
 $api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}` // встановлення токена доступу
     return config;
 })
 
@@ -16,16 +16,14 @@ $api.interceptors.response.use((config) => {
     return config;
 },async (error) => {
     const originalRequest = error.config;
-   
-    if (error.response.status == 401 && error.config && !error.config._isRetry) {
+    if (error.response.status == 401 && error.config && !error.config._isRetry) { // перевірка на 401 помилку
         originalRequest._isRetry = true;
         try {
-            const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true})
-            console.log(response);
+            const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true}) // отримання нової пари токенів
             localStorage.setItem('token', response.data.accessToken);
-            return $api.request(originalRequest);
+            return $api.request(originalRequest); // повторення оригінального запиту
         } catch (e) {
-            console.log('НЕ АВТОРИЗОВАН')
+            console.log('Не авторизований!')
         }
     }
     throw error;

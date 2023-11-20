@@ -22,6 +22,7 @@ import EditArticle from "./components/pages/EditArticle";
 import EditWork from "./components/pages/EditWork";
 import CreateWork from "./components/pages/CreateWork";
 import CreateArticle from "./components/pages/CreateArticle";
+import EditCarousel from "./components/pages/EditCarousel";
 
 
 function App() {
@@ -66,6 +67,9 @@ function App() {
           </Route>
           <Route path="/admin">
             <Admin />
+          </Route>
+          <Route path="/carousel">
+            <EditCarousel />
           </Route>
           <Route exact path="/">
             <Main />

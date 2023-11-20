@@ -26,16 +26,16 @@ const Main = () => {
     <div className='container'>
       <SimpleSlider />
 
-      <section class="works">
-        <div class="works-background">
-          <div class="container">
-            <div class="works-info">
-              <div class="works-left">ТВОРЧI РОБОТИ СТУДЕНТIВ</div>
-              <div class="works-right"><Link to="/works" >ВСІ РОБОТИ</Link></div>
+      <section className="works">
+        <div className="works-background">
+          <div className="container">
+            <div className="works-info">
+              <div className="works-left">ТВОРЧI РОБОТИ СТУДЕНТIВ</div>
+              <div className="works-right"><Link to="/works" >ВСІ РОБОТИ</Link></div>
             </div>
-            <div class="works-content" ref={worksWrapperRef}>
+            <div className="works-content" ref={worksWrapperRef}>
               {works.map((work) => (
-                <div key={work.id} className="works-content__a" style={{ backgroundImage: `url(${work.backgroundImage})`, backgroundSize: 'cover', position: 'relative' }}>
+                <div key={work._id} className="works-content__a" style={{ backgroundImage: `url(${work.backgroundImage})`, backgroundSize: 'cover', position: 'relative' }}>
                   <a href={work.url} className="works-element">
                     <div className="works-element__info " data-id="def">{work.title}</div>
                     <div className="works-element__info__hide hide" data-id="dev"></div>
