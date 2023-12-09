@@ -28,7 +28,6 @@ import EditCarousel from "./components/pages/EditCarousel";
 function App() {
 
   const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(checkAuthAsync())
   }, [])
